@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const Main = () => {
   const [isJumping, setIsJumping] = useState(false);
   const [imageUrl, setImageUrl] = useState("/sin.png"); // public 폴더 경로
+  const [time, setTime] = useState(10);
 
   useEffect(() => {
     // 10초마다 점프 애니메이션
@@ -11,8 +12,13 @@ const Main = () => {
       setTimeout(() => setIsJumping(false), 1000);
     }, 10000);
 
+    setTimeout(() => setTime(9), 1000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => (time != 1 ? setTime(time - 1) : setTime(10)), 1000);
+  }, [time]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-300 to-green-300 flex items-end justify-center relative overflow-hidden py-16">
@@ -60,7 +66,7 @@ const Main = () => {
       {/* 텍스트 */}
       <div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-center">
         <p className="text-2xl font-bold text-white drop-shadow-lg">
-          짱구가 10초마다 점프해요! 🎉
+          짱구가 {time}초마다 점프해요! 🎉
         </p>
         <p className="text-sm text-white drop-shadow-lg mt-2">
           {isJumping ? "점프 중! 🚀" : "다음 점프까지 기다려주세요..."}
